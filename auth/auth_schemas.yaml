@@ -11,3 +11,33 @@ RegisterRequest:
     userPassword:
       type: string
       description: User Password
+AccountResponse:
+  type: object
+  properties:
+    id:
+      type: string
+      description: Account Unique ID
+    email:
+      type: string
+      format: email
+      description: Email Address
+    nickName:
+      type: string
+      description: User Nickname
+    accountState:
+      type: string
+      description: Account State - Created, Ready, Revoked, DroppedOut, Error
+    roles:
+      type: array
+      description: Account roles - like admin, and normal user
+      items:
+        type: string
+ErrorResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      description: Error Message Title
+    detailMessage:
+      type: string
+      description: Error Message Detail

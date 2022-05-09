@@ -1,0 +1,4 @@
+AccessTokenSecurity:
+  type: http
+  scheme: bearer
+  description: LWS Access Token

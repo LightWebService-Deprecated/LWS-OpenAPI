@@ -10,6 +10,32 @@ tags:
     description: Account(Register, Edit, Dropout) Related APIs
 paths:
   /api/account:
+    get:
+      security:
+        - AccessTokenSecurity: []
+      tags:
+        - Account
+      summary: Get Account Information, Except for password
+      description: This API will get account information, such as email address and nickname.
+      responses:
+        200:
+          description: When successfully got account information.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountResponse"
+        401:
+          description: When API Request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Somehow account information is not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     post:
       tags:
         - Account
@@ -26,3 +52,5 @@ paths:
 components:
   schemas:
     $ref: "./auth_schemas.yaml"
+  securitySchemes:
+    $ref: "../common/security.yaml"

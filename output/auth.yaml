@@ -10,6 +10,32 @@ tags:
     description: 'Account(Register, Edit, Dropout) Related APIs'
 paths:
   /api/account:
+    get:
+      security:
+        - AccessTokenSecurity: []
+      tags:
+        - Account
+      summary: 'Get Account Information, Except for password'
+      description: 'This API will get account information, such as email address and nickname.'
+      responses:
+        '200':
+          description: When successfully got account information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        '401':
+          description: When API Request is not authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Somehow account information is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     post:
       tags:
         - Account
@@ -38,3 +64,38 @@ components:
         userPassword:
           type: string
           description: User Password
+    AccountResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Account Unique ID
+        email:
+          type: string
+          format: email
+          description: Email Address
+        nickName:
+          type: string
+          description: User Nickname
+        accountState:
+          type: string
+          description: 'Account State - Created, Ready, Revoked, DroppedOut, Error'
+        roles:
+          type: array
+          description: 'Account roles - like admin, and normal user'
+          items:
+            type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error Message Title
+        detailMessage:
+          type: string
+          description: Error Message Detail
+  securitySchemes:
+    AccessTokenSecurity:
+      type: http
+      scheme: bearer
+      description: LWS Access Token
